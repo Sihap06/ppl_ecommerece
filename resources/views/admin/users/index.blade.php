@@ -5,10 +5,10 @@
 <div class="container-fluid">
     
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Daftar User</h1>
+    <h1 class="h3 mb-2 text-gray-800">Daftar Pengguna</h1>
     
     {{-- button tambah produk --}}
-    <a class="btn btn-primary mb-3" href="javascript:void(0)" id="create"> Tambah User</a>
+    {{-- <a class="btn btn-primary mb-3" href="javascript:void(0)" id="create"> Tambah Pengguna</a> --}}
     {{-- <a href="{{route('dashboard.create')}}" class="btn btn-primary my-2">Tambah User</a> --}}
     
     <!-- DataTales Example -->
@@ -87,15 +87,6 @@
                     <div class="form-group">
                         <label for="">Avatar:</label><br>
                         <input type="file" name="_avatar" id="_avatar">
-                        {{-- <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Avatar</span>
-                            </div>
-                            <div class="custom-file">
-                                <input type="file" name="avatar" id="_avatar" class="custom-file-input">
-                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                            </div>
-                        </div> --}}
                         
                     </div>
                 </div>
@@ -112,7 +103,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Hapus Postingan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Hapus Akun Pengguna</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -121,12 +112,12 @@
                 <form action="{{route('dashboard.destroy', 'id')}}" method="POST">
                     {{method_field('DELETE')}}
                     @csrf
-                    Hapus postingan ini ?
+                    Apakah anda yakin akan menghapus akun ini ?
                     <input type="hidden" name="hapus_id" id="hapus_id" value="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Hapus</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
                 </div>
             </form>
         </div>

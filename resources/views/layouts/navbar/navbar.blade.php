@@ -96,7 +96,7 @@ $categories = \DB::table('categories')->get()->all();
 			</li>
 			@if (Auth::user()->hasAnyRole('admin'))
 			<li class="nav-item">
-				<a class="nav-link" href="{{ route('users.index') }}">{{ __('Manage') }}</a>
+				<a class="nav-link" href="{{ route('dashboard.index') }}">{{ __('Manage') }}</a>
 			</li>
 			
 			
@@ -120,7 +120,7 @@ $categories = \DB::table('categories')->get()->all();
 				</button>
 			</div>
 			<div class="modal-body">
-				<form method="POST" action="{{ route('login') }}">
+				<form id="login" method="POST" action="{{ route('login') }}">
 					@csrf
 					
 					<div class="form-group">
@@ -158,23 +158,23 @@ $categories = \DB::table('categories')->get()->all();
 				</button>
 			</div>
 			<div class="modal-body">
-				<form class="user" action="{{route('register')}}" enctype="multipart/form-data" method="POST">
+				<form class="user" id="user" action="{{route('register')}}" enctype="multipart/form-data" method="POST">
 					@csrf
 					<div class="form-group">
-						<input value="{{old('name')}}" type="text" name="name" class="form-control form-control-user @error('name') is-invalid @enderror" id="exampleFirstName" placeholder="Username">
+						<input value="{{old('name')}}" type="text" name="name" class="form-control form-control-user @error('name') is-invalid @enderror" id="name" placeholder="Username">
 						@error('name') <div class="invalid-feedback">{{$message}}</div> @enderror
 					</div>
 					<div class="form-group">
-						<input value="{{old('email')}}" type="email" name="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="exampleInputEmail" placeholder="Email">
+						<input value="{{old('email')}}" type="email" name="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="email" placeholder="Email">
 						@error('email') <div class="invalid-feedback">{{$message}}</div> @enderror
 					</div>
 					<div class="form-group row">
 						<div class="col-sm-6 mb-3 mb-sm-0">
-							<input type="password" name="password" class="form-control form-control-user @error('password') is-invalid @enderror" id="exampleInputPassword" placeholder="Password">
+							<input type="password" name="password" class="form-control form-control-user @error('password') is-invalid @enderror" id="_password" placeholder="Password">
 							@error('password') <div class="invalid-feedback">{{$message}}</div> @enderror
 						</div>
 						<div class="col-sm-6">
-							<input type="password" name="confirmpassword" class="form-control form-control-user @error('confirmpassword') is-invalid @enderror" id="exampleRepeatPassword" placeholder="Konfirmasi Password">
+							<input type="password" name="confirmpassword" class="form-control form-control-user @error('confirmpassword') is-invalid @enderror" id="confirmpassword" placeholder="Konfirmasi Password">
 							@error('confirmpassword') <div class="invalid-feedback">{{$message}}</div> @enderror
 						</div>
 					</div>
@@ -216,4 +216,62 @@ $categories = \DB::table('categories')->get()->all();
 		</div>
 	</div>
 </div>
+
+@section('section-footer')
+<script>
+
+	$('#login').validate({
+		rules: {
+			email: {
+				required: true,
+				email: true,
+			},
+			password: {
+				required: true,
+			}
+		}
+	});
+	
+	$('#user').validate({
+		rules: {
+			name: {
+				required:true,
+				minlength:5,
+			},
+			email: {
+				required:true,
+				email:true,
+			},
+			password: {
+				required:true,
+				minlength:6,
+			},
+			confirmpassword: {
+				minlength:6,
+				required:true,
+				equalTo: "#_password"
+			},
+			address: {
+				required:true,
+				minlength:10,
+			},
+			phone: {
+				required:true,
+				number:true,
+				minlength: 12,
+				maxlength: 13,  
+			},
+			province_destination: {
+				required:true,
+			},
+
+			city_destination: {
+				required: true,
+			},
+			
+		}
+	});
+	
+</script>
+@endsection
 

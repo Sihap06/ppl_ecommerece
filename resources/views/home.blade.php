@@ -59,18 +59,27 @@
     </div>
 </section>
 
+@foreach ($categories as $category)
+
+
+{{-- @dd($products) --}}
+{{-- @dd($category['products']) --}}
 <section class="ftco-section" id="produk">
     <div class="container">
         <div class="row justify-content-center mb-3 pb-3">
             <div class="col-md-12 heading-section text-center ftco-animate">
-                <h2 class="mb-4">Produk Kami</h2>
-                <p>Kopi yang kami produksi berasal langsung dari pegunungan yang sangat bagus untuk kopi, sehingga kopi yang kami hasilkan mempunayi kualitas dan rasa yang mantap</p>
+                {{-- <span class="subheading">Semua Produk</span> --}}
+                <h2 class="mb-4">{{$category->name}}</h2>
+                {{-- <p class="pl-5 pr-5">Kopi yang kami produksi berasal langsung dari pegunungan yang sangat bagus untuk kopi, sehingga kopi yang kami hasilkan mempunayi kualitas dan rasa yang mantap</p> --}}
             </div>
         </div>   		
     </div>
+    
+    
+    
     <div class="container">
         <div class="row">
-            @foreach ($products as $product)
+            @foreach ($category['products'] as $product)
             <div class="col-md-6 col-lg-3 ftco-animate">
                 <div class="product">
                     <a href="{{url('/show', $product->id)}}" class="img-prod">
@@ -100,13 +109,13 @@
                                     <input type="hidden" name="price" value="{{$product->price}}">
                                     <input type="hidden" name="qty" value="1">
                                     @guest
-
+                                    
                                     <button type="button" data-toggle="modal" data-target="#loginModal" class="btn btn-primary"><i class="ion-ios-cart"></i></button>
-                                        
+                                    
                                     @else 
-
+                                    
                                     <button type="submit" class="btn btn-primary"><i class="ion-ios-cart"></i></button>
-
+                                    
                                     @endguest
                                 </form>       
                             </div>
@@ -118,25 +127,7 @@
         </div>
     </div>
 </section>
+@endforeach
 
-{{-- <section class="ftco-section img" style="background-image: url(images/bg_3.jpg);">
-    <div class="container">
-        <div class="row justify-content-end">
-            <div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate">
-                <span class="subheading">Best Price For You</span>
-                <h2 class="mb-4">Deal of the day</h2>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-                <h3><a href="#">Spinach</a></h3>
-                <span class="price">$10 <a href="#">now $5 only</a></span>
-                <div id="timer" class="d-flex mt-5">
-                    <div class="time" id="days"></div>
-                    <div class="time pl-3" id="hours"></div>
-                    <div class="time pl-3" id="minutes"></div>
-                    <div class="time pl-3" id="seconds"></div>
-                </div>
-            </div>
-        </div>   		
-    </div>
-</section> --}}
 
 @endsection

@@ -19,11 +19,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Route;
 // use Ramsey\Uuid\Uuid;
 
-Route::get('/', function () {
-    $products = \App\Product::inRandomOrder()->take(8)->get();
-    $banners = \App\Banner::all();
-    return view('home', ['products' => $products, 'banners' => $banners]);
-});
+Route::get('/', 'HomeController@index');
 
 Route::any('/province/{id}/cities', 'CheckoutController@getCities');
 
@@ -40,6 +36,10 @@ Route::group(['middleware' => ['auth', 'auth.admin']], function () {
     Route::get('/detail/{id}', 'OrderController@detail');
     Route::get('/peramalan', 'OrderController@peramalanproduk');
     Route::get('/peramalan/{slug}', 'OrderController@peramalan');
+    Route::post('editProduct', 'ProductController@editProduct');
+    Route::post('gantiFotoProduk', 'ProductController@gantiFotoProduk');
+    Route::get('verifikasiOrder/{id}', 'OrderController@verifikasiOrder');
+    Route::post('batalOrder', 'OrderController@batalOrder');
     Route::get('getproduk', [
         'uses' => 'ProductController@getproduk',
         'as' => 'ajax.get.produk',
@@ -51,6 +51,11 @@ Route::group(['middleware' => ['auth', 'auth.admin']], function () {
     Route::get('getuser', [
         'uses' => 'UserController@getuser',
         'as' => 'ajax.get.user',
+    ]);
+
+    Route::get('getcategories', [
+        'uses' => 'CategoryController@getcategories',
+        'as' => 'ajax.get.categories',
     ]);
 });
 
@@ -87,8 +92,10 @@ Route::group(['middleware' => ['auth']], function () {
         return view('terimakasih');
     });
     Route::get('profile', 'UserController@profile');
+    Route::post('testi', 'HomeController@testi');
     Route::post('gantiFoto', 'UserController@gantiFoto');
     Route::post('editProfile', 'UserController@editProfile');
+    Route::resource('users', 'UserController');
 });
 
 
@@ -104,7 +111,7 @@ Route::get('/belanja', [
 ]);
 
 
-Route::resource('users', 'UserController');
+
 
 // Route::get('/belanja', function(){
 //     $products = \App\Product::all();

@@ -101,7 +101,8 @@
     </script>
     
     @endif
-  </div>
+
 </section>
+{{-- </div> --}}
 
 @endsection

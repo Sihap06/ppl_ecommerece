@@ -12,7 +12,7 @@ $provinces = \DB::table('provinces')->pluck('title', 'province_id');
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
                 
-                <li class="nav-item"><a href="{{ url('/belanja') }}" class="nav-link">Shop</a></li> 
+                {{-- <li class="nav-item"><a href="{{ url('/belanja') }}" class="nav-link">Shop</a></li>  --}}
                 <li class="nav-item">
                     
                     @guest

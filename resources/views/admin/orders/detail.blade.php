@@ -9,7 +9,7 @@
                 <a href="{{asset('storage/'. $order->bukti_tf)}}" class="image-popup"><img src="{{asset('storage/'. $order->bukti_tf)}}" class="img-fluid" alt="Colorlib Template"></a>
             </div>
             <div class="col-lg-6 product-details pl-md-5 ftco-animate">
-
+                
                 @php
                 $items = json_decode($order->items);
                 $qty = json_decode($order->qty)
@@ -20,12 +20,6 @@
                 @foreach ($items as $data)
                 <h3 class="text-capitalize">{{\DB::table('products')->where('slug', $data)->value('product_name')}} <span>[{{$jumlah}}]</span></h3>
                 @endforeach
-                {{-- @dd($item) --}}
-                <div class="rating d-flex">
-                    <p class="text-left">
-                        <a href="#" class="mr-2" style="color: #000;">{{\DB::table('products')->where('slug', $data)->value('stock')}} <span style="color: #bbb;">Stock Tersedia</span></a>
-                    </p>
-                </div>
                 <p class="price"><span>Rp {{number_format($order->subtotal + $order->cost)}}</span> Total Biaya</p>
                 <p></p>
                 <div class="row mt-4">
@@ -44,9 +38,51 @@
                         {{-- @dd($order) --}}
                     </div>
                 </div>
-                <p><a href="{{url('kembali')}}" class="btn btn-black py-3 px-5">Kembali</a></p>
+                <p class="mt-4"> 
+                    <a href="{{url('kembali')}}" class="btn btn-primary">Kembali</a>
+                    <a href="{{url('verifikasiOrder', $order->id)}}" class="btn btn-info">Verifikasi</a>
+                    <a href="#" data-toggle="modal" data-id="{{$order->id}}" data-target="#batalModal" class="btn btn-danger">Batal</a>
+                </p>
             </div>
         </div>
     </div>
 </section>
+<!-- Modal -->
+<div class="modal fade" id="batalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Batal Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ url('batalOrder') }}" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="id" id="id">
+                    
+                    <div class="form-group">
+                        <input type="text" name="alasan" placeholder="masukkan alasan pembatalan order" class="form-control" id="alasan" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @stop
+@section('section-footer')
+<script>
+    $('#batalModal').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        
+        var modal = $(this)
+        modal.find('.modal-body #id').val(id)
+    });
+</script>
+@endsection

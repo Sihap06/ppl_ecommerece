@@ -24,18 +24,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @php
-                    $kampang = $orders->all();    
-                    @endphp
+                        @php
+                        $kampang = $orders->all();    
+                        @endphp
                         @foreach ($kampang as $order)
                         {{-- @dd($order['products']) --}}
-
+                        
                         <tr>
                             <td>
                                 @if ($order->status == 'booked')
                                 <span class="badge bg-warning text-light">{{$order->status}}</span>
                                 @elseif($order->status == 'order')
                                 <span class="badge bg-info text-light">{{$order->status}}</span>
+                                @elseif($order->status == 'verifikasi')
+                                <span class="badge bg-primary text-light">{{$order->status}}</span>
+                                @elseif($order->status == 'batal')
+                                <span class="badge bg-danger text-light">{{$order->status}}</span>
+                                @elseif($order->status == 'proses')
+                                <span class="badge bg-gradient-success text-light">{{$order->status}}</span>
+                                @elseif($order->status == 'selesai')
+                                <span class="badge bg-gradient-secondary text-light">{{$order->status}}</span>
                                 @endif
                             </td>
                             <td>
@@ -65,50 +73,11 @@
                                 <a href="{{ url('/detail', $order->id)}}">
                                     <button type="button" class="btn btn-info btn-sm">Detail</button>
                                 </a>
-                                <a href="{{ url('/batal', $order->id)}}">
-                                    <button type="button" class="btn btn-danger btn-sm">Batal</button>
-                                </a>
-                                {{-- <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
-                                    Hapus
-                                </button> --}}
                             </td>
                         </tr>
                         
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Hapus</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Apakah anda yakin ingin menghapus data?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <form class="float-left mr-1" action="/orders/{{$order->id}}" method="POST">
-                                            {{ method_field('DELETE') }}
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-
                         @endforeach
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="10">
-                                {{-- {{$orders->appends(Request::all())->links()}} --}}
-                            </td>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>

@@ -46,12 +46,9 @@ class UserController extends Controller
             return '<span id="' . $id . '" style="cursor:pointer;" class="btn-barang">' . $user->name;
         })
             ->addColumn('action', function ($row) {
-                $btn = '<a href="dashboard/' . $row->id . '/edit" data-original-title="Edit" class="edit btn btn-success btn-sm edit-user">
-                Edit
-                </a>
-                <button id="delete-user" data-toggle="modal" data-target="#hapusModal" data-hapusid="' . $row->id . '" class="delete btn btn-danger btn-sm">
-                Delete
-                </button>';
+                $btn = '<a href="users/' . $row->id . '" data-original-title="Edit" class="edit btn btn-info btn-sm edit-user">
+                Detail
+                </a>';
                 return $btn;
                 // dd($row);
             })
@@ -230,7 +227,9 @@ class UserController extends Controller
 
     public function gantiFoto(Request $request)
     {
-        $data = User::findOrFail(Auth::user()->id);
+        // dd($request->id);
+        $data = User::findOrFail($request->id);
+
         // dd($data);
         $image = $request->file('gambar');
 
@@ -258,7 +257,7 @@ class UserController extends Controller
             // 'avatar'    => 'mimes:jpg,jpeg,png'
         ])->validate();
 
-        $data = User::findOrFail(Auth::user()->id);
+        $data = User::findOrFail($request->id);
         // dd($data);
         $data->name = $request->name;
         $data->email = $request->email;

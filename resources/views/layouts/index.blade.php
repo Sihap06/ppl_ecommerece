@@ -53,6 +53,12 @@
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
 	<script src="{{asset('js/jquery.min.js')}}"></script>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
+
 	<script src="{{asset('js/jquery-migrate-3.0.1.min.js')}}"></script>
 	<script src="{{asset('js/popper.min.js')}}"></script>
 	<script src="{{asset('js/bootstrap.min.js')}}"></script>
@@ -65,9 +71,9 @@
 	<script src="{{asset('js/jquery.animateNumber.min.js')}}"></script>
 	<script src="{{asset('js/bootstrap-datepicker.js')}}"></script>
 	<script src="{{asset('js/scrollax.min.js')}}"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="{{asset('js/google-map.js')}}"></script>
+	{{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script> --}}
 	<script src="{{asset('js/main.js')}}"></script>
+	
 	{{-- <script src="{{asset('js/cart.js')}}"></script> --}}
 	@yield('section-footer')
 	<script>
@@ -122,7 +128,7 @@
 		});
 	</script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-
+	
 	
 	
 </body>

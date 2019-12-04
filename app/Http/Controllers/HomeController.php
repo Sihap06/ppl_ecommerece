@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Testimoni;
+
 
 class HomeController extends Controller
 {
@@ -30,7 +32,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home')->with(['products' => Product::paginate(10), 'banners' => Banner::all()]);
+        $categories = Category::with('products')->get()->all();
+        // $products = Product::inRandomOrder()->take(8)->get();
+        // dd($categories);
+        return view('home', compact(['categories']))->with(['banners' =>  Banner::all()]);
     }
 
     public function show($id)
@@ -59,14 +64,6 @@ class HomeController extends Controller
     {
         $category = \DB::table('category_product')->where('category_id', $id)->get();
         $cat = $category->all();
-        // foreach ($cat as $item) {
-        //     // $p = \DB::table('products');
-        //     // var_dump($item);
-        //     $data = \App\Product::where('id', $item->product_id)->get();
-        //     $products = $data->all();
-        //     // dd($products);
-        // }
-        // $products = \App\Product::with('categories')->get()->all();
         $product = \App\Category::with('products')->where('id', $id)->get()->all();
         $products = $product[0];
         // dd($product[0]);
@@ -90,5 +87,21 @@ class HomeController extends Controller
     public function kembali()
     {
         return redirect('orders');
+    }
+    public function testi(Request $request)
+    {
+        $data = \App\Order::findOrFail($request->id);
+        $slug = json_decode($data->items);
+
+        for ($i = 0; $i < count($slug); $i++) {
+            $product = \App\Product::where('slug', $slug[$i])->value('id');
+            $new = new \App\Testimoni;
+            $new->user_id = Auth::user()->id;
+            $new->order_id = $request->get('id');
+            $new->product_id = $product;
+            $new->value = $request->get('range');
+            $new->save();
+        }
+        return redirect('profile');
     }
 }

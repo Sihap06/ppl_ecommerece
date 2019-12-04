@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Role;
 
 class RegisterController extends Controller
 {
@@ -66,7 +67,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        // dd($data);
+        $new_user = new \App\User;
+        $userRole = Role::where('name', 'user')->first();
+
+        $new_user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -75,5 +80,7 @@ class RegisterController extends Controller
             'province_id' => $data['province_destination'],
             'city_id' => $data['city_destination']
         ]);
+        $new_user->roles()->attach($userRole);
+        return $new_user;
     }
 }

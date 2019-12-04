@@ -190,4 +190,25 @@ class OrderController extends Controller
 
         return view('pembayaranId', compact('item'));
     }
+
+    public function verifikasiOrder(Request $request, $id)
+    {
+        $data = Order::findOrFail($id);
+        // dd($data);
+        $data->status = 'verifikasi';
+        $data->save();
+
+        return back();
+    }
+
+    public function batalOrder(Request $request)
+    {
+        // dd($request->all());
+        $data = Order::findOrFail($request->id);
+        $data->alasan = $request->alasan;
+        $data->status = 'batal';
+        $data->save();
+
+        return back();
+    }
 }

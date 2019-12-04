@@ -46,15 +46,9 @@ class ProductController extends Controller
             })
             ->addColumn('action', function ($row) {
                 $btn = '
-                <a href="products/' . $row->id . '/edit" data-original-title="Edit" class="edit btn btn-success btn-sm edit-produk">
-                Edit
-                </a>
                 <a href="products/' . $row->id . '" data-original-title="Edit" class="edit btn btn-info btn-sm">
                 Detail
                 </a>
-                <button id="delete-user" data-toggle="modal" data-target="#hapusModal" data-hapusid="' . $row->id . '" class="delete btn btn-danger btn-sm">
-                Delete
-                </button>
                 ';
                 return $btn;
                 // dd($row);
@@ -205,5 +199,40 @@ class ProductController extends Controller
     {
         Product::destroy($request->get('hapus_id'));
         return back()->with('success', 'Product successfully deleted');
+    }
+
+    public function editProduct(Request $request)
+    {
+        // dd($request->all());
+        Product::where('id', $request->id)->update([
+            'product_name' => $request->name,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'description' => $request->description,
+        ]);
+
+        return back()->with('success', 'Data Produk Berhasil diupdate');
+    }
+
+    public function gantiFotoProduk(Request $request)
+    {
+        // dd($request->all());
+        $data = Product::findOrFail($request->id);
+
+        // dd($data);
+        $image = $request->file('gambar');
+
+        if ($image) {
+            if ($data->avatar && file_exists(storage_path('app/public/' . $data->avatar))) {
+                \Storage::delete('public/' . $data->avatar);
+            }
+
+            $new_data_path = $image->store('images_product', 'public');
+
+            $data->avatar = $new_data_path;
+        }
+        $data->save();
+
+        return back()->with('success', 'Gambar Produk Berhasil diupdate');
     }
 }
